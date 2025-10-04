@@ -1,5 +1,11 @@
 # Placeholder file for Prow
 
+# Bazel 7.6.1 enables bzlmod by default
+# Use --config=workspace to disable bzlmod and use WORKSPACE
+# Use --config=bzlmod to explicitly enable bzlmod (default in 7.6.1)
+build:workspace --noenable_bzlmod
+build:bzlmod --enable_bzlmod
+
 # Required by envoy and its tests
 build --define=grpc_no_ares=true
 build --cxxopt=-std=c++17 --host_cxxopt=-std=c++17
