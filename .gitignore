@@ -1,2 +1,2 @@
-# Bazel build outputs
-bazel-*
+/bazel-*
+MODULE.bazel.lock

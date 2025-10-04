@@ -2,16 +2,6 @@ workspace(name = "proto_field_extraction")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# rules_python is only needed for bzlmod
-# RULES_PYTHON_TAG = "1.6.3"
-# RULES_PYTHON_SHA = "2f5c284fbb4e86045c2632d3573fc006facbca5d1fa02976e89dc0cd5488b590"
-# http_archive(
-#     name = "rules_python",
-#     sha256 = RULES_PYTHON_SHA,
-#     strip_prefix = "rules_python-%s" % RULES_PYTHON_TAG,
-#     url = "https://github.com/bazelbuild/rules_python/releases/download/%s/rules_python-%s.tar.gz" % (RULES_PYTHON_TAG, RULES_PYTHON_TAG),
-# )
-
 http_archive(
     name = "bazel_skylib",
     sha256 = "6e78f0e57de26801f6f564fa7c4a48dc8b36873e416257a92bbb0937eeac8446",
