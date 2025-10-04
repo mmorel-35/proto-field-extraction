@@ -38,9 +38,10 @@ http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "ht
 
 http_archive(
     name = "ocp",
-    integrity = "sha256-lId4YnGzYuoqoX3hXtoxoG9nIfoQeudEb2k6gXzsOlc=",
-    strip_prefix = "ocp-diag-core-cpp-7f38c4d0e770ede1e36a8eef18a68c913c1b33ce",
-    url = "https://github.com/opencomputeproject/ocp-diag-core-cpp/archive/7f38c4d0e770ede1e36a8eef18a68c913c1b33ce.tar.gz",
+    patch_args = ["-p0"],
+    patches = ["//:ocp_protobuf29_compat.patch"],
+    strip_prefix = "ocp-diag-core-e965ac0ac6db6686169678e2a6c77ede904fa82c/apis/c++",
+    url = "https://github.com/opencomputeproject/ocp-diag-core/archive/e965ac0ac6db6686169678e2a6c77ede904fa82c.tar.gz",
 )
 
 # Configure googleapis for C++

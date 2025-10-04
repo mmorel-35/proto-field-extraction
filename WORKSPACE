@@ -45,6 +45,8 @@ http_archive(
 # For status_macros
 http_archive(
     name = "ocp",
+    patch_args = ["-p0"],
+    patches = ["//:ocp_protobuf29_compat.patch"],
     strip_prefix = "ocp-diag-core-e965ac0ac6db6686169678e2a6c77ede904fa82c/apis/c++",
     url = "https://github.com/opencomputeproject/ocp-diag-core/archive/e965ac0ac6db6686169678e2a6c77ede904fa82c.tar.gz",
 )
