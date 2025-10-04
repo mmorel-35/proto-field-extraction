@@ -1,0 +1,52 @@
+module(
+    name = "proto-field-extraction",
+    version = "",
+)
+
+# Core dependencies matching grpc-httpjson-transcoding versions
+bazel_dep(name = "abseil-cpp", version = "20240116.2", repo_name = "com_google_absl")
+bazel_dep(name = "bazel_skylib", version = "1.8.2")
+bazel_dep(name = "googleapis", version = "0.0.0-20250826-a92cee39", repo_name = "com_google_googleapis")
+
+# grpc-httpjson-transcoding dependency with git override
+bazel_dep(name = "grpc-httpjson-transcoding", repo_name = "grpc_httpjson_transcoding")
+git_override(
+    module_name = "grpc-httpjson-transcoding",
+    commit = "707b30339ef40f654fb93a175528b8c165688fc8",
+    remote = "https://github.com/mmorel-35/grpc-httpjson-transcoding.git",
+)
+
+# proto-converter is a dependency of grpc-httpjson-transcoding
+# We need to declare the git_override here as well
+bazel_dep(name = "proto-converter", repo_name = "com_google_protoconverter")
+git_override(
+    module_name = "proto-converter",
+    commit = "2458ed8ea405b47c1960f0b0af211efdf0e057a0",
+    remote = "https://github.com/mmorel-35/proto-converter.git",
+)
+
+bazel_dep(name = "protobuf", version = "29.3", repo_name = "com_google_protobuf")
+bazel_dep(name = "rules_cc", version = "0.1.1")
+bazel_dep(name = "rules_pkg", version = "1.0.1")
+bazel_dep(name = "rules_proto", version = "7.0.2")
+bazel_dep(name = "rules_python", version = "1.6.3")
+
+bazel_dep(name = "googletest", version = "1.14.0.bcr.1", dev_dependency = True, repo_name = "com_google_googletest")
+
+# For status_macros - using http_archive as it's not in Bazel Central Registry
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "ocp",
+    patch_args = ["-p0"],
+    patches = ["//:ocp_protobuf29_compat.patch"],
+    strip_prefix = "ocp-diag-core-e965ac0ac6db6686169678e2a6c77ede904fa82c/apis/c++",
+    url = "https://github.com/opencomputeproject/ocp-diag-core/archive/e965ac0ac6db6686169678e2a6c77ede904fa82c.tar.gz",
+)
+
+# Configure googleapis for C++
+switched_rules = use_extension("@com_google_googleapis//:extensions.bzl", "switched_rules")
+switched_rules.use_languages(
+    cc = True,
+)
+use_repo(switched_rules, "com_google_googleapis_imports")
